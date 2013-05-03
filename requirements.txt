@@ -1,0 +1,3 @@
+mechanize
+html5lib
+beautifulsoup4
