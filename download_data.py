@@ -18,6 +18,13 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 
+def clean_name(s):
+  """ Clean the string to be something nicer to write as a filename
+  """
+  s = re.sub(' ', '_', s)
+  return re.sub('\W', '', s)
+
+
 def html_line_to_series(base_href, line):
   """ Gets the name and href for the series page, if found in this line
   """
@@ -85,7 +92,7 @@ for series in series_data:
     continue
   logging.info("Examining series %s at %s" % (series.name, series.href))
 
-  series_page_file = 'data/html/%s.html' % re.sub(' ', '_', series.name)
+  series_page_file = 'data/html/%s.html' % clean_name(series.name)
   if os.path.exists(series_page_file):
     logging.info('Reading series page data from cached html file')
     with open(series_page_file) as f:
@@ -106,7 +113,7 @@ for series in series_data:
     if book_link.title is None:
       continue
     logging.info('Examining book %s from %s' % (book_link.title, book_link.href))
-    book_file = 'data/html/%s_%s.html' % (re.sub(' ', '_', series.name), re.sub(' ', '_', book_link.title))
+    book_file = 'data/html/%s_%s.html' % (clean_name(series.name), clean_name(book_link.title))
     if os.path.exists(book_file):
       logging.info('Reading book data from cached html file')
       with open(book_file) as f:
