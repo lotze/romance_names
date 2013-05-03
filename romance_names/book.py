@@ -15,9 +15,17 @@ class Book(object):
 
     soup = BeautifulSoup(html_content, "html5lib")
 
-    self.publication_year = re.sub('published ', '', soup.find(div_linebox_published).text)
+    published_tag = soup.find(div_linebox_published)
+    if published_tag is None:
+      self.publication_year = None
+    else:
+      self.publication_year = re.sub('published ', '', published_tag.text)
 
-    self.synopsis = soup.find_all('span', class_='synopsis')[0].text
+    synopsis_tag = soup.find_all('span', class_='synopsis')[0]
+    if synopsis_tag is None:
+      self.synopsis = None
+    else:
+      self.synopsis = synopsis_tag.text
 
     # remove tabs and newlines
     self.synopsis = re.sub("\t", " ", self.synopsis)
