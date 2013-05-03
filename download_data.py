@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: iso-8859-15 -*-
+
 import mechanize
 import re
 import os
@@ -93,6 +96,7 @@ for series in series_data:
     series_page_html = r.read()
     with open(series_page_file, 'w') as f:
       f.write(series_page_html)
+    time.sleep(1)
 
   # get links for every book in the series
   book_links = parse_book_links(series.href, series_page_html)
@@ -113,12 +117,9 @@ for series in series_data:
       book_html = r.read()
       with open(book_file, 'w') as f:
         f.write(book_html)
+      time.sleep(1)
 
     book = Book(series.name, book_link.title, book_link.href, book_html)
     with open(output_file, 'a') as f:
       f.write(book.to_tsv())
       f.write("\n")
-    time.sleep(1)
-
-  time.sleep(1)
-

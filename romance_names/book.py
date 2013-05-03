@@ -24,4 +24,4 @@ class Book(object):
     self.synopsis = re.sub("\n", " ", self.synopsis)
 
   def to_tsv(self):
-    return "\t".join((self.series_name, self.title, self.href, self.publication_year, self.synopsis))
+    return "\t".join((self.series_name, self.title, self.href, self.publication_year, self.synopsis)).encode('utf-8')
